@@ -27,7 +27,7 @@ def upload():
     bl = parser(column, table)
 
     return jsonify({
-        'status': '0' if len(set(bl)) == 1 and bl[0] == 0 else '1',
+        'status': 0 if len(set(bl)) == 1 and bl[0] == 0 else 1,
         'bl': bl
     })
 

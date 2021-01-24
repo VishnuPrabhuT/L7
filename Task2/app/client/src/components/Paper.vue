@@ -15,12 +15,13 @@ export default {
 
 <style scoped>
 .paper {
+  padding: 20px;
   margin: 2% auto;
-  width: 50vw;
+  width: 40vw;
   height: 30vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   justify-content: space-evenly;
   box-shadow: var(--panel-shadow);
   border-radius: 4px;

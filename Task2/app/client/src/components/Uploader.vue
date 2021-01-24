@@ -1,6 +1,5 @@
 <template>
   <paper>
-    <h1 for="uploader">Benford's Law</h1>
     <div class="item">
       <label for="uploader">Select file -</label>
       <input id="uploader" ref="file" type="file" @change="setOptions" />
@@ -14,6 +13,7 @@
         </option>
       </select>
     </div>
+    <div v-show="errorMsg" class="error">{{ errorMsg }}</div>
     <button @click="upload">Upload</button>
   </paper>
 </template>
@@ -29,6 +29,7 @@ export default {
     return {
       file: "",
       headers: [{ name: "None", val: -1 }],
+      errorMsg: "",
     };
   },
   methods: {
@@ -42,7 +43,6 @@ export default {
         i += 1;
       }
       this.headers = headers;
-      console.log(this.headers);
     },
     async upload() {
       let selectedColumn = await this.$refs.selectedColumn.selectedIndex;
@@ -60,7 +60,13 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
-          vueref.$emit("plotData", data.bl);
+          if (data.status) {
+            this.errorMsg = "";
+            vueref.$emit("plotData", data.bl);
+          } else {
+            vueref.$emit("plotData", []);
+            this.errorMsg = "Not a valid column!";
+          }
         });
     },
   },
@@ -69,9 +75,14 @@ export default {
 
 <style>
 .item {
-  width: 100%;
+  height: 50px;
+  width: max-content;
+  display: flex;
+  justify-content: start;
+  align-items: center;
 }
 button {
+  margin: 0 auto;
   padding: 1% 3%;
   border-color: gray;
   border-radius: 5px;
@@ -83,6 +94,7 @@ button {
 
 button:hover {
   box-shadow: var(--button_shadow_hover);
+  cursor: pointer;
 }
 
 input,
@@ -92,10 +104,20 @@ button {
 }
 
 label {
+  width: 200px;
   border-radius: 5px;
-  padding: 1%;
+  padding: 10px;
   border: 1px solid black;
   background: rgba(122, 126, 122, 0.1);
+  margin-right: 20px;
+}
+
+.error {
+  width: max-content;
+  border-radius: 5px;
+  padding: 1%;
+  border: 1px solid rgb(163, 83, 54);
+  background: rgba(233, 137, 59, 0.385);
   margin-right: 2%;
 }
 </style>

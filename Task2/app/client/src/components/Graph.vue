@@ -1,5 +1,7 @@
 <template>
   <paper id="graph" v-if="plots.length > 0">
+    <div v-if="successMsg" class="successMsg">{{ successMsg }}</div>
+    <div v-if="failureMsg" class="failureMsg">{{ failureMsg }}</div>
     <apexchart
       width="550"
       height="350"
@@ -27,6 +29,8 @@ export default {
   },
   data() {
     return {
+      successMsg: "",
+      failureMsg: "",
       chartOptions: {
         chart: {
           id: "vuechart-example",
@@ -67,6 +71,18 @@ export default {
         },
         { name: "Your Data", data: toRaw(this.plots) },
       ];
+
+      if (this.plots[0] >= 29) {
+        this.successMsg = "Adheres to Benford's Law!";
+        setTimeout(() => {
+          this.successMsg = "";
+        }, 5000);
+      } else {
+        this.failureMsg = "Doesn't adhere to Benford's Law!";
+        setTimeout(() => {
+          this.failureMsg = "";
+        }, 5000);
+      }
       console.log("watch", this.series);
       return this.series;
     },
@@ -76,7 +92,27 @@ export default {
 
 <style>
 #graph {
-  width: 70vw;
+  width: 40vw;
   height: 50vh;
+}
+
+.successMsg {
+  margin: 0 auto;
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid var(--c_text_green);
+  background: rgba(105, 214, 105, 0.255);
+}
+
+.failureMsg {
+  margin: 0 auto;
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid orange;
+  background: rgba(255, 177, 9, 0.452);
+}
+
+.vue-apexcharts {
+  margin: 0 auto;
 }
 </style>

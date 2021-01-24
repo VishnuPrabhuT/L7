@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 for="uploader">Benford's Law</h1>
     <uploader @plotData="plotPoints($event)" />
     <graph v-if="plots.length > 0" :plots="plots" />
   </div>
@@ -57,5 +58,6 @@ body {
 #app {
   height: 100%;
   width: 100%;
+  padding: 1%;
 }
 </style>
