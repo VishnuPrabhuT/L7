@@ -19,22 +19,23 @@ def send_file(filename):
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    file_content = request.get_json()
-    column = file_content['column']
-    lines = file_content['fileContent'].split('\n')
-    table = list(map(lambda line: line.split('\t'), lines))
+    try:
+        file_content = request.get_json()
+        column = file_content['column']
+        lines = file_content['fileContent'].split('\n')
+        table = list(map(lambda line: line.split('\t'), lines))
 
-    bl = parser(column, table)
+        bl = parser(column, table)
+    except:
+        return jsonify({
+            'status': 0,
+            'bl': [0]
+        })
 
     return jsonify({
         'status': 0 if len(set(bl)) == 1 and bl[0] == 0 else 1,
         'bl': bl
     })
-
-
-@app.route('/ping', methods=['GET'])
-def ping_pong():
-    return jsonify('pong!')
 
 
 if __name__ == '__main__':

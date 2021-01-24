@@ -1,8 +1,8 @@
 version: '3.4'
 
 services:
-  task2:
-    image: task2
+  benfords-law:
+    image: benfords-law
     build:
       context: .
       dockerfile: ./Dockerfile

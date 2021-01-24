@@ -1,12 +1,12 @@
 <template>
   <paper>
     <div class="item">
-      <label for="uploader">Select file -</label>
+      <label for="uploader">Select a text file</label>
       <input id="uploader" ref="file" type="file" @change="setOptions" />
     </div>
 
     <div class="item">
-      <label for="Select Target Column">Select target column -</label>
+      <label for="Select Target Column">Select target column</label>
       <select name="Select Target Column" ref="selectedColumn">
         <option :key="index" v-for="(option, index) in headers" value="">
           {{ option.name }}
@@ -35,7 +35,7 @@ export default {
   methods: {
     async setOptions() {
       this.file = await this.$refs.file.files[0].text();
-
+      console.log(this.$refs.file.files[0]);
       let i = 0;
       let headers = [];
       for (let option of this.file.split("\n")[0].split("\t")) {
