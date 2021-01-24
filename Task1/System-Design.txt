@@ -1,23 +1,32 @@
 Architecture
 
-I have designed for a monolithic system but I would also talk about how this could be scaled 
+I have designed for a monolithic system but I would also talk about how this could be scaled
 to a distributed system and the challenges that come along with it.
 
 
 * FrontEnd
-    ->  The APIs can structured in a way that would reflect a efficient data retrieval for a screen.
+    ->  The APIs can be structured in a way that would reflect a efficient data retrieval for a screen.
+
     ->  The tabled should be designed in a way we wouldn't need much computation at the service layer,
         which could be maintained even with a distributed system.
 
+    ->  For this particular system there's only so much heavy lifting the frontend can do. So I would use
+        that breathing space to provide better dynamic PWA styled UI/UX, provide better analytics to the user to land sales.
+
 * Backend
-    ->  This looks similar to a shopping system, so I would try to judge
-        the read and write specific tables when I come up with a schema.
-    ->  Since in a shopping system write consistency and avilability takes 
-        higher precedance I would make the tblCustomers highly available with 
-        read and write nodes in a distributed system. I would also employ writes 
-        happen to multiple nodes before returining to user in case of write node failure.
-    ->  The tables are normalized in a way that schema or static data like warehouses, suppliers, min_qty 
+    ->  This looks similar to a shopping system, so I would try to judge the read and write
+        specific tables when I come up with a schema.
+
+    ->  Since in a shopping system write consistency and avilability takes higher precedence I would
+        make the tblCustomers highly available with read and write nodes in a distributed system.
+        I would also employ writes happen to multiple nodes before returning to user
+        in case of write node failure.
+
+    ->  The tables are normalized in a way that schema or static data like warehouses, suppliers, min_qty
         can be added or updated without hindering write specific tables in production.
+
+    ->  I have made some critical assumptions but most of the clarifications would be around the scale and
+        the consistency vs availability  of the different features in the product and strike a meaningful balance.
 
 Tables {
 
